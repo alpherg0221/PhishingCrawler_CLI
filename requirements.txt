@@ -1,0 +1,4 @@
+playwright == 1.28.0
+Flask == 2.2.2
+waitress == 2.1.2
+flask-cors == 3.0.10
