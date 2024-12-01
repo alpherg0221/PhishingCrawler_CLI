@@ -58,7 +58,7 @@ async def playwright_main(mobile: str, url: str, target: str, gsb: str) -> str:
         page = await context.new_page()
         page.on("response", lambda res: save_resources(res, saved_dirname))  # リソース保存設定
         await page.goto(url)
-        await page.wait_for_timeout(3000)
+        await page.wait_for_timeout(5000)
 
         # スクショを保存
         await page.screenshot(path=f'{saved_dirname}/snapshot.png', full_page=True)
