@@ -74,10 +74,6 @@ async def playwright_main(mobile: str, url: str, target: str, gsb: str) -> str:
 
 
 async def save_resources(res: Response, dirname: str) -> None:
-    # URLの最後が / なら保存しないで終了
-    if res.url.endswith("/"):
-        return
-
     filename = f"{dirname}{urlparse(unquote(res.url)).path}"
     os.makedirs(os.path.dirname(filename), exist_ok=True)
 
@@ -89,15 +85,6 @@ async def save_resources(res: Response, dirname: str) -> None:
 
 
 async def save_main_page(content: str, filename: str, depth: int) -> None:
-    # パスの書き換え
-    add_path = "../" * depth if depth >= 1 else "./"
-    # // を https:// に変換
-    content = re.sub('src="//', 'src="https://', content)
-    content = re.sub('href="//', 'href="https://', content)
-    # /path を ./path に変換
-    content = re.sub('src="/(.+?)"', f'src="{add_path}\\1"', content)
-    content = re.sub('href="/(.+?)"', f'href="{add_path}\\1"', content)
-
     # 内容を保存
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, "w") as f:
